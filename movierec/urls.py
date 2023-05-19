@@ -18,8 +18,11 @@ from django.urls import path
 from movierec import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import redirect
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', lambda r: redirect('/signup'), name='default'),
     path('signup/',views.signup,name="signup"),
     path('login/',views.user_login,name="login"),
     path('home/',views.home,name="home"),
