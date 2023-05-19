@@ -181,7 +181,7 @@ def signup(request):
         else:
             if not request.user.is_authenticated:
                 fm=SignUpForm()
-        return render(request,'MovieRecommender/signup.html',{'form':fm})
+        return render(request,'movierec/signup.html',{'form':fm})
     else:
         return HttpResponseRedirect('/home/')
 
@@ -199,7 +199,7 @@ def user_login(request):
                     return HttpResponseRedirect('/dashboard/')
         else:
             fm=LoginForm()
-        return render(request,'MovieRecommender/login.html',{'form':fm})
+        return render(request,'movierec/login.html',{'form':fm})
     else:
         return HttpResponseRedirect('/dashboard/')
 
@@ -208,7 +208,7 @@ def user_login(request):
 def home(request):
     params=filterMovieByGenre()
     params['recommended']=generateRecommendation(request)
-    return render(request,'MovieRecommender/home.html',params)
+    return render(request,'movierec/home.html',params)
 
 def addmovie(request):
     if request.user.is_authenticated:
@@ -219,7 +219,7 @@ def addmovie(request):
                 messages.success(request,'Movie Added Successfully!!!')
         else:
             fm=AddMovieForm()
-        return render(request,'MovieRecommender/addmovie.html',{'form':fm})
+        return render(request,'movierec/addmovie.html',{'form':fm})
     else:
         return HttpResponseRedirect('/login/')
 
@@ -241,17 +241,17 @@ def dashboard(request):
                 count=Rating.objects.filter(user=u,movie=m).count()
                 if(count>0):
                     messages.warning(request,'You have already submitted your review!!')
-                    return render(request,'MovieRecommender/dashboard.html',params)
+                    return render(request,'movierec/dashboard.html',params)
                 action=Rating(user=u,movie=m,rating=rat)
                 action.save()
                 messages.success(request,'You have submitted'+' '+rat+' '+"star")
-            return render(request,'MovieRecommender/dashboard.html',params)
+            return render(request,'movierec/dashboard.html',params)
         else:
             #print(request.user.id)
             rfm=AddRatingForm()
             params['rform']=rfm
             movie=Movie.objects.all()
-            return render(request,'MovieRecommender/dashboard.html',params)
+            return render(request,'movierec/dashboard.html',params)
     else:
         return HttpResponseRedirect('/login/')
             
@@ -270,7 +270,7 @@ def profile(request):
             totalReview+=int(item.rating)
         #select count(*) from Rating where user=request.user.id"
         totalwatchedmovie=Rating.objects.filter(user=request.user.id).count()
-        return render(request,'MovieRecommender/profile.html',{'totalReview':totalReview,'totalwatchedmovie':totalwatchedmovie})
+        return render(request,'movierec/profile.html',{'totalReview':totalReview,'totalwatchedmovie':totalwatchedmovie})
     else:
         return HttpResponseRedirect('/login/')
 

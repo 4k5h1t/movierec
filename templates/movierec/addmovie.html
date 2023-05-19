@@ -1,4 +1,4 @@
-{% extends 'MovieRecommender/base.html' %}
+{% extends 'movierec/base.html' %}
 {% block title %}Add Movie{% endblock title %}
 {% block css %}
 body{
@@ -6,7 +6,7 @@ body{
 }
 {% endblock css %}
 {%block content%}
- {%if perms.MovieRecommender.add_movie%}
+ {%if perms.movierec.add_movie%}
 <div class="container  mt-2 p-5 mb-2">
 <h1 class="text-center text-light">Add Movie</h1>  
   <form action="" method="post" enctype="multipart/form-data">
